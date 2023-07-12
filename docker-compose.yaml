@@ -1,0 +1,23 @@
+version: '1'
+services:
+  mysqldb:
+    container_name: "my-sql-db"
+    image: mysql
+    ports:
+      - 3304:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+    volumes:
+      - mysqldata:/var/lib/mysql
+  myapp:
+    container_name: "my-app"
+    build: .
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldb
+volumes:
+  mysqldata:
+    driver: local
